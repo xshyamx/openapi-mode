@@ -1,0 +1,19 @@
+# OpenAPI Mode #
+
+Minor mode for OpenAPI & Swagger yaml files. Provides support jumping
+to definitions & references using `xref`. Navigation helpers to narrow
+to block and move across yaml blocks.
+
+## Keybindings ##
+
+Standard `xref` keybindings for jump to definition <kbd>M-.</kbd>,
+jump back <kbd>M-,</kbd> & show references <kbd>M-?</kbd> are used.
+
+| Feature                         | Keybinding         | OpenAPI            | Swagger              |
+|---------------------------------|:------------------:|:------------------:|:--------------------:|
+| Move forward yaml block         | <kbd>C-M-f</kbd>   | :white_check_mark: | :white_check_mark:   |
+| Move backward yaml block        | <kbd>C-M-b</kbd>   | :white_check_mark: | :white_check_mark:   |
+| Narrow to yaml block            | <kbd>C-x n b</kbd> | :white_check_mark: | :white_check_mark:   |
+| Jump to path operation          | <kbd>C-c C-p</kbd> | :white_check_mark: | :white_check_mark:   |
+| Jump to section                 | <kbd>C-c C-s</kbd> | :white_check_mark: | :white_large_square: |
+| Insert component/definition ref | <kbd>C-c C-c</kbd> | :white_check_mark: | :white_check_mark:   |
