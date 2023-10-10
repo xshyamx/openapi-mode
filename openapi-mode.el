@@ -137,7 +137,7 @@ within the buffer"
   "Jumps to selected component section"
   (interactive)
   (let ((options (openapi--list-sections)))
-    (let ((selection (completing-read "Select section: " options nil t)))
+    (let ((selection (completing-read "Select section: " options nil t "components/")))
       (when-let ((section (assoc selection options)))
 	(push-mark)
 	(print section)
@@ -149,7 +149,7 @@ within the buffer"
   (when-let
       ((selection
 	(completing-read "Select component: " (openapi--list-definitions)
-			 nil t)))
+			 nil t "components/")))
     (insert (format
 	     (if (looking-back openapi-yaml-ref-regexp (line-beginning-position))
 		 "#/%s"
