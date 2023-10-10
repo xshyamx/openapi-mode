@@ -42,22 +42,23 @@
   "Regexp to match path operations under the `paths' top-level key ")
 
 (defconst openapi-yaml-ref-regexp
-  (rx (seq (group (? (any "'\""))) "$ref" (backref 1) ": " (any "'\"")))
+  (rx (seq (group (? (any "'\""))) "$ref" (backref 1) ":" (+ space) (group (? (any "'\"")))))
   "Regexp to match '$ref'")
 
 (defun openapi-forward-block ()
   "Move to end of yaml block"
   (interactive)
-  (push-mark)
   (when-let ((b (openapi-block-bounds)))
+    (setq-local openapi--block-mark (car b))
     (goto-char (cadr b))))
 
 (defun openapi-backward-block ()
   "Move back to beginning of yaml block"
   (interactive)
   (push-mark)
-  (when-let ((b (openapi-block-bounds)))
-    (goto-char (car b))))
+  (when openapi--block-mark
+    (goto-char openapi--block-mark)
+    (forward-to-word 1)))
 
 (defun openapi-indent-length ()
   "Find the length of the indent by counting the spaces from
@@ -135,6 +136,7 @@ specification yaml"
 		(list :url subsection :method (match-string-no-properties 2) :buffer-location (match-beginning 2))
 		refs)))))))
     (reverse refs)))
+
 (defvar openapi-list-paths-backend
   nil
   "Function to get list of path operations")
@@ -157,4 +159,9 @@ specification yaml"
     (define-key keymap (kbd "C-x n b") #'openapi-narrow-to-block)
     keymap)
   "Common keybings to navigate & narrow to yaml blocks")
+
+(defvar-local openapi--block-mark
+  nil
+  "Stores the current block beginning position")
+
 (provide 'openapi-common)
