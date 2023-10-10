@@ -121,7 +121,7 @@ within the buffer"
   (when-let
       ((selection
 	(completing-read "Select definition: " (swagger--list-definitions)
-			 nil t)))
+			 nil t "definitions/")))
     (insert (format
 	     (if (looking-back openapi-yaml-ref-regexp (line-beginning-position))
 		 "#/%s"
