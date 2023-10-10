@@ -14,6 +14,10 @@
       eol)
   "Regexp to extract block reference")
 
+(defconst openapi-components-regexp
+  (rx (seq bol "components" (* (any space)) ":"))
+  "Regexp to match the top-level 'components' key")
+
 (defconst openapi-subsection-key-regexp
   (rx (seq
        bol

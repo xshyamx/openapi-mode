@@ -54,7 +54,7 @@ checking if the top-level key 'openapi' is present"
       (save-restriction
 	(widen)
 	(goto-char (point-min))
-	(when (re-search-forward "^components:" nil t)
+	(when (re-search-forward openapi-components-regexp nil t)
 	  (setq sb (openapi-block-bounds))
 	  (apply #'narrow-to-region sb)
 	  (goto-char (point-min))
@@ -72,7 +72,7 @@ checking if the top-level key 'openapi' is present"
     (save-restriction
       (widen)
       (goto-char (point-min))
-      (when (re-search-forward "^components:" nil t)
+      (when (re-search-forward openapi-components-regexp nil t)
 	(message "found tld")
 	(let ((b (openapi-block-bounds)))
 	  (apply #'narrow-to-region (openapi-block-bounds))
