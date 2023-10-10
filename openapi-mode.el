@@ -150,11 +150,16 @@ within the buffer"
       ((selection
 	(completing-read "Select component: " (openapi--list-definitions)
 			 nil t "components/")))
-    (insert (format
-	     (if (looking-back openapi-yaml-ref-regexp (line-beginning-position))
-		 "#/%s"
-	       "$ref: '#/%s'")
-	     selection))))
+    (insert
+     (format
+      (if (looking-back openapi-yaml-ref-regexp (line-beginning-position))
+	  (if (> (length (match-string-no-properties 2)) 0)
+	      "#/%s"
+	    "'#/%s'"
+	    )
+	"$ref: '#/%s'"
+	)
+      selection))))
 
 (defvar openapi-mode-map
   (let ((keymap (make-sparse-keymap)))
