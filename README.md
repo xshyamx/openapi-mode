@@ -20,5 +20,11 @@ jump back <kbd>M-,</kbd> & show references <kbd>M-?</kbd> are used.
 | Jump to path operation          | <kbd>C-c C-p</kbd>   | :white_check_mark: | :white_check_mark:   |
 | Jump to section                 | <kbd>C-c C-s</kbd>   | :white_check_mark: | :white_large_square: |
 | Insert component/definition ref | <kbd>C-c C-c</kbd>   | :white_check_mark: | :white_check_mark:   |
+| Insert parameter ref            | <kbd>C-c i p</kbd>   | :white_check_mark: | :white_large_square: |
+| Insert header ref               | <kbd>C-c i p</kbd>   | :white_check_mark: | :white_large_square: |
+| Insert response ref             | <kbd>C-c i r</kbd>   | :white_check_mark: | :white_large_square: |
+| Insert request body ref         | <kbd>C-c i b</kbd>   | :white_check_mark: | :white_large_square: |
+| Insert scheam ref               | <kbd>C-c i s</kbd>   | :white_check_mark: | :white_large_square: |
+
 
 **NOTE**: Moving back a block moves to the last yaml block moved forward

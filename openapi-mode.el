@@ -161,12 +161,49 @@ within the buffer"
 	)
       selection))))
 
+(defun openapi--list-section (section)
+  (seq-filter (lambda (x) (string-prefix-p (format "components/%s" section) x)) (openapi--list-definitions)))
+
+(defun openapi--section-singular (section)
+  (cond
+   ("parameters" "Parameter")
+   ("headers" "Header")
+   ("schemas" "Schema item")
+   ("responses" "Response")
+   ("requestBodies" "Request body")))
+
+(defmacro openapi--insert-section (section)
+  `(lambda ()
+     (interactive)
+     (when-let
+	 ((selection
+	   (completing-read
+	    ,(format "Select %s: " (openapi--section-singular section)) (openapi--list-section ,section)
+	    nil t ,(format "components/%s/" section))))
+       (insert
+	(format
+	 (if (looking-back openapi-yaml-ref-regexp (line-beginning-position))
+	     (if (> (length (match-string-no-properties 2)) 0)
+		 "#/%s"
+	       "'#/%s'"
+	       )
+	   "$ref: '#/%s'"
+	   )
+	 selection)))))
+
+
+
 (defvar openapi-mode-map
   (let ((keymap (make-sparse-keymap)))
     (set-keymap-parent keymap openapi--yaml-mode-map)
     (define-key keymap (kbd "C-c C-p") #'openapi-jump-to-operation)
     (define-key keymap (kbd "C-c C-s") #'openapi-jump-to-section)
     (define-key keymap (kbd "C-c C-c") #'openapi-insert-component-ref)
+    (define-key keymap (kbd "C-c i p") (openapi--insert-section "parameters"))
+    (define-key keymap (kbd "C-c i h") (openapi--insert-section "headers"))
+    (define-key keymap (kbd "C-c i s") (openapi--insert-section "schemas"))
+    (define-key keymap (kbd "C-c i r") (openapi--insert-section "responses"))
+    (define-key keymap (kbd "C-c i b") (openapi--insert-section "requestBodies"))
     keymap)
   "OpenAPI keymap for block & path-operation navigation"
   )
