@@ -152,11 +152,36 @@ specification yaml"
 	  (push-mark)
 	  (goto-char (plist-get operation :buffer-location)))))))
 
+(defun openapi-copy-block ()
+  "Copy the current yaml block at point"
+  (interactive)
+  (when-let ((b (openapi-block-bounds)))
+    (kill-ring-save (car b) (cadr b))))
+
+(defun openapi-kill-block ()
+  "Cut the current yaml block at point"
+  (interactive)
+  (when-let ((b (openapi-block-bounds)))
+    (kill-region (car b) (cadr b))))
+
+(defun openapi-select-block ()
+  "Select the current yaml block at point"
+  (interactive)
+  (when-let ((b (openapi-block-bounds)))
+    (goto-char (car b))
+    (push-mark (point) nil t)
+    (goto-char (cadr b))
+    (setq mark-active t)
+    ))
+
 (defvar openapi--yaml-mode-map
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap (kbd "C-M-f") #'openapi-forward-block)
     (define-key keymap (kbd "C-M-b") #'openapi-backward-block)
     (define-key keymap (kbd "C-x n b") #'openapi-narrow-to-block)
+    (define-key keymap (kbd "C-c C-w") #'openapi-copy-block)
+    (define-key keymap (kbd "C-c C-k") #'openapi-kill-block)
+    (define-key keymap (kbd "C-c C-SPC") #'openapi-select-block)
     keymap)
   "Common keybings to navigate & narrow to yaml blocks")
 
