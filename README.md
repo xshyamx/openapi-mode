@@ -24,7 +24,7 @@ jump back <kbd>M-,</kbd> & show references <kbd>M-?</kbd> are used.
 | Insert header ref               | <kbd>C-c i p</kbd>   | :white_check_mark: | :white_large_square: |
 | Insert response ref             | <kbd>C-c i r</kbd>   | :white_check_mark: | :white_large_square: |
 | Insert request body ref         | <kbd>C-c i b</kbd>   | :white_check_mark: | :white_large_square: |
-| Insert scheam ref               | <kbd>C-c i s</kbd>   | :white_check_mark: | :white_large_square: |
+| Insert schema ref               | <kbd>C-c i s</kbd>   | :white_check_mark: | :white_large_square: |
 
 
 **NOTE**: Moving back a block moves to the last yaml block moved forward

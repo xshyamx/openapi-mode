@@ -212,7 +212,8 @@ within the buffer"
   "Minor mode to provide xref navigation within OpenAPI yaml files"
   :lighter " OpenAPI"
   (setq-local openapi-list-paths-backend #'openapi-list-paths)
-  (add-hook 'xref-backend-functions #'openapi-xref-backend nil t))
+  (add-hook 'xref-backend-functions #'openapi-xref-backend nil t)
+  (openapi--add-font-lock-extras))
 
 (defun enable-openapi-mode ()
   "Conditionally enable openapi mode"

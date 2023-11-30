@@ -139,7 +139,9 @@ within the buffer"
   "Minor mode to provide xref navigation within swagger yaml files"
   :lighter " Swagger"
   (setq-local openapi-list-paths-backend #'openapi-list-paths)
-  (add-hook 'xref-backend-functions #'swagger-xref-backend nil t))
+  (add-hook 'xref-backend-functions #'swagger-xref-backend nil t)
+  (openapi--add-font-lock-extras))
+
 
 (defun enable-swagger-mode ()
   "Conditionally enable swagger mode"

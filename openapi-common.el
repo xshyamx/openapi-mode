@@ -186,7 +186,65 @@ specification yaml"
   "Common keybings to navigate & narrow to yaml blocks")
 
 (defvar-local openapi--block-mark
-  nil
+    nil
   "Stores the current block beginning position")
+
+(defun openapi--add-font-lock-extras ()
+  "Additional font-lock rules specific to OpenAPI"
+  (let ((mime-types '("application/json"
+		      "application/xml"
+		      "application/x-www-form-urlencoded"
+		      "multipart/form-data"
+		      "text/plain"
+		      "text/html"
+		      "application/pdf"
+		      "image/png"))
+	(rules))
+    ;; mime-types
+    (push (list
+	   (rx-to-string
+	    `(seq bol (+ whitespace)
+		  (group (? (any "\"'")))
+		  (group (or ,@mime-types))
+		  (? (backref 1))
+		  (* whitespace) ":"))
+	   1 ''font-lock-keyword-face)
+	  rules)
+    ;; important keys
+    (push (list
+	   (rx  bol (+ whitespace)
+		(group (or "parameters" "requestBody" "responses"))
+		(* whitespace) ":")
+	   1 ''font-lock-keyword-face)
+	  rules)
+    ;; operationId
+    (push (list
+	   (rx  bol (+ whitespace) (group (? (any "\"'")))
+		(group "operationId") (? (backref 1)) (* whitespace)
+		":" (+ whitespace) (group (+ any)))
+	   '(2 'font-lock-function-name-face)
+	   '(3 'font-lock-constant-face))
+	  rules)
+    ;; http-methods
+    (push (list
+	   (rx  bol (+ whitespace) bow (group (or "get" "put" "post" "patch" "head" "delete")) eow (* whitespace) ":")
+	   1 ''font-lock-function-name-face)
+	  rules)
+    ;; response-codes
+    (push (list
+	   (rx  bol (+ whitespace) bow (group (any "12345") (repeat 2 digit)) eow (* whitespace) ":")
+	   1 ''font-lock-constant-face)
+	  rules)
+    ;; path-parameter
+    (push (list
+	   (rx  "/" (group "{" (*? word) "}"))
+	   1 ''font-lock-keyword-face t)
+	  rules)
+    ;; path
+    (push (list
+	   (rx bol (+ whitespace) (group "/" (*? (not (any ":")))) ":")
+	   1 ''font-lock-builtin-face)
+	  rules)
+    (font-lock-add-keywords 'yaml-mode rules)))
 
 (provide 'openapi-common)
