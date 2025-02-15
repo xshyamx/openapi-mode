@@ -1,4 +1,19 @@
-(require 'cl-lib)
+;;; openapi-mode.el --- Major mode for OpenAPI  -*- lexical-binding: t; -*-
+
+;; Author:   S. Shyam Sundar (xshyamx@users.noreply.github.com)
+;; Version:  0.1
+
+;; Additional stuff
+;; Keywords: yaml, openapi, xref
+
+;;; Commentary:
+
+;; Major mode for OpenAPI
+
+;;; Code:
+
+(provide 'openapi-mode)
+;;; openapi-mode.el
 (require 'xref)
 (require 'openapi-common)
 ;; regexp constants
@@ -237,3 +252,4 @@ within the buffer"
 (add-hook 'yaml-mode-hook #'enable-openapi-mode)
 
 (provide 'openapi-mode)
+;;; openapi-mode.el ends here

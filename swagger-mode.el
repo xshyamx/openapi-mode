@@ -6,11 +6,10 @@
 ;; Additional stuff
 ;; Keywords: yaml, swagger, xref
 
-;;; Commentary (S. Shyam Sundar):
+;;; Commentary:
 
 ;; Added `xref-backend' to support jumping to schema references within
 ;; the swagger yaml file.
-
 
 (require 'cl-lib)
 (require 'xref)
@@ -152,3 +151,4 @@ within the buffer"
 (add-hook 'yaml-mode-hook #'enable-swagger-mode)
 
 (provide 'swagger-mode)
+;;; swagger-mode.el ends here

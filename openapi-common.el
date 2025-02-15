@@ -1,10 +1,23 @@
-(defconst openapi-ref-regexp
-  (rx bol (+ space)
-      (? "-") (+ space)
-      (group (? (or "'" "\""))) "$ref" (backref 1)
-      (* space) ":" (* space)
-      (group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
-  "Regexp to extract '$ref' reference")
+;;; openapi-common.el --- Common functions  -*- lexical-binding: t; -*-
+
+;; Author:   S. Shyam Sundar (xshyamx@users.noreply.github.com)
+;; Version:  0.1
+
+;; Additional stuff
+;; Keywords: yaml, openapi, xref
+
+;;; Commentary:
+
+;; Common utility functions
+
+;;; Code:
+
+(rx bol (+ space)
+    (? "-") (+ space)
+    (group (? (or "'" "\""))) "$ref" (backref 1)
+    (* space) ":" (* space)
+    (group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
+"Regexp to extract '$ref' reference")
 
 (defconst openapi-block-regexp
   (rx bol (group (* space))
@@ -248,3 +261,4 @@ specification yaml"
     (font-lock-add-keywords 'yaml-mode rules)))
 
 (provide 'openapi-common)
+;;; openapi-common.el ends here
