@@ -172,8 +172,23 @@ within the buffer"
    ("responses" "Response")
    ("requestBodies" "Request body")))
 
+(defun openapi--kebab-case (camelCase)
+  (let ((case-fold-search nil))
+    (with-temp-buffer
+      (insert camelCase)
+      (goto-char 0)
+      (while (re-search-forward
+	      (rx (group lower) (group upper))
+	      nil t)
+	(replace-match (concat (match-string-no-properties 1)
+			       "-"
+			       (match-string-no-properties 2))
+		       t t))
+      (downcase (buffer-string)))))
+
 (defmacro openapi--insert-section (section)
-  `(lambda ()
+  `(defun ,(intern (concat "openapi-insert-" (openapi--kebab-case section))) ()
+     ,(concat "Insert " section)
      (interactive)
      (when-let
 	 ((selection
@@ -190,8 +205,6 @@ within the buffer"
 	   "$ref: '#/%s'"
 	   )
 	 selection)))))
-
-
 
 (defvar openapi-mode-map
   (let ((keymap (make-sparse-keymap)))
