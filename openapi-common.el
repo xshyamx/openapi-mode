@@ -11,13 +11,13 @@
 ;; Common utility functions
 
 ;;; Code:
-
-(rx bol (+ space)
-    (? "-") (+ space)
-    (group (? (or "'" "\""))) "$ref" (backref 1)
-    (* space) ":" (* space)
-    (group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
-"Regexp to extract '$ref' reference")
+(defconst openapi-ref-regexp
+	(rx bol (+ space)
+			(? "-") (+ space)
+			(group (? (or "'" "\""))) "$ref" (backref 1)
+			(* space) ":" (* space)
+			(group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
+	"Regexp to extract '$ref' reference")
 
 (defconst openapi-block-regexp
   (rx bol (group (* space))
