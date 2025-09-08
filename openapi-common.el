@@ -2,9 +2,11 @@
 
 ;; Author:   S. Shyam Sundar (xshyamx@users.noreply.github.com)
 ;; Version:  0.1
+;; URL: https://github.com/xshyamx/openapi-mode
 
 ;; Additional stuff
-;; Keywords: yaml, openapi, xref
+;; Keywords: files, tools, languages
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; Commentary:
 
@@ -12,12 +14,12 @@
 
 ;;; Code:
 (defconst openapi-ref-regexp
-	(rx bol (+ space)
-			(? "-") (+ space)
-			(group (? (or "'" "\""))) "$ref" (backref 1)
-			(* space) ":" (* space)
-			(group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
-	"Regexp to extract '$ref' reference")
+  (rx bol (+ space)
+      (? "-") (+ space)
+      (group (? (or "'" "\""))) "$ref" (backref 1)
+      (* space) ":" (* space)
+      (group (? (or "'" "\""))) (group (+? nonl)) (backref 2))
+  "Regexp to extract '$ref' reference")
 
 (defconst openapi-block-regexp
   (rx bol (group (* space))

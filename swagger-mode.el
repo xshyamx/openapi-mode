@@ -1,10 +1,12 @@
-;;; swagger-mode.el --- xref backend for swagger files
+;;; swagger-mode.el --- Xref backend for swagger files
 
 ;; Author:   S. Shyam Sundar (xshyamx@users.noreply.github.com)
 ;; Version:  0.1
+;; URL: https://github.com/xshyamx/openapi-mode
 
 ;; Additional stuff
-;; Keywords: yaml, swagger, xref
+;; Keywords: files, tools, languages
+;; Package-Requires: ((emacs "25.1"))
 
 ;;; Commentary:
 
@@ -39,7 +41,7 @@
   (swagger--find-references symbol))
 
 ;; helpers
-(defun is-swagger-file ()
+(defun swagger-file-p ()
   "Function returns t if current buffer is a swagger file by
 checking if the top-level key `swagger' is present"
   (save-excursion
@@ -88,8 +90,7 @@ $ref: '#/definitions/key'"
 	    (format
 	     "%s:%s"
 	     (propertize (format "%d" (line-number-at-pos (line-beginning-position))) 'face 'shadow)
-	     (buffer-substring (line-beginning-position) (line-end-position))
-	     )
+	     (buffer-substring (line-beginning-position) (line-end-position)))
 	    (xref-make-buffer-location (current-buffer) (match-beginning 0)))
 	   refs))
 	(reverse refs)))))
@@ -142,13 +143,13 @@ within the buffer"
   (openapi--add-font-lock-extras))
 
 
-(defun enable-swagger-mode ()
+(defun swagger--mode ()
   "Conditionally enable swagger mode"
-  (when (is-swagger-file)
+  (when (swagger-file-p)
     (swagger-mode)))
 
 ;;;###autoload
-(add-hook 'yaml-mode-hook #'enable-swagger-mode)
+(add-hook 'yaml-mode-hook #'swagger--mode)
 
 (provide 'swagger-mode)
 ;;; swagger-mode.el ends here
